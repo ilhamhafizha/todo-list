@@ -1,65 +1,61 @@
 import "./App.css";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useCallback } from "react";
 
 function App() {
   const [todos, setTodos] = useState([]);
   const [filter, setFilter] = useState("all");
 
-  const handleClick = () => {
-    setTodos((currrentTodos) => [
-      ...currrentTodos,
+  const handleAddTodo = () => {
+    setTodos((currentTodos) => [
+      ...currentTodos,
       {
-        id: currrentTodos.length + 1,
-        title: `TODO ${currrentTodos.length + 1}`,
-        complated: false,
+        id: currentTodos.length + 1,
+        title: `TODO ${currentTodos.length + 1}`,
+        completed: false,
       },
     ]);
   };
 
-  const handleClickItemClick = (id) => {
-    setTodos((currentTodos) => {
-      return currentTodos.map((todo) => {
-        if (todo.id === id) {
-          return { ...todo, complated: !todo.complated };
-        }
-        return todo;
-      });
-    });
-  };
-
+  const handleTodoClick = useCallback((id) => {
+    setTodos((currentTodos) =>
+      currentTodos.map((todo) => (todo.id === id ? { ...todo, completed: !todo.completed } : todo))
+    );
+  }, []);
   const filterTodo = (todo, filter) => {
-    if (filter === "all") {
-      return true;
-    }
-    if (filter === "complated") {
-      return todo.complated;
-    }
-    if (filter === "uncomplated") {
-      return !todo.complated;
-    }
+    if (filter === "all") return true;
+    if (filter === "completed") return todo.completed;
+    if (filter === "uncompleted") return !todo.completed;
+    return true;
   };
 
-  // const visibleTodos = todos.filter((todo) => filterTodo(todo, filter));
-  const memoizedFilterTodos = useMemo(() => filterTodo(todos, filter), [todos.filter]);
+  const visibleTodos = useMemo(() => todos.filter((todo) => filterTodo(todo, filter)), [todos, filter]);
+
+  const TodoItem = ({ id, completed, title, onTodoChange }) => (
+    <div key={id}>
+      <input type="checkbox" checked={completed} onChange={() => onTodoChange(id)} />
+      <span>{title}</span>
+    </div>
+  );
 
   return (
     <>
       <h1>Todo App</h1>
-      <button onClick={handleClick}>Add Todo</button>
+      <button onClick={handleAddTodo}>Add Todo</button>
       <button onClick={() => setFilter("all")}>Show all</button>
-      <button onClick={() => setFilter("complated")}>Show Complated Todo</button>
-      <button onClick={() => setFilter("uncomplated")}>Show Uncomplated Todo</button>
+      <button onClick={() => setFilter("completed")}>Show Completed Todo</button>
+      <button onClick={() => setFilter("uncompleted")}>Show Uncompleted Todo</button>
 
       <div>
         <h2>TodoList</h2>
-        {visibleTodos.map((todo) => {
-          return (
-            <div key={todo.id}>
-              <input type="checkbox" checked={todo.complated} onChange={() => handleClickItemClick(todo.id)} />
-              <span>{todo.title}</span>
-            </div>
-          );
-        })}
+        {visibleTodos.map((todo) => (
+          <TodoItem
+            key={todo.id}
+            id={todo.id}
+            title={todo.title}
+            completed={todo.completed}
+            onTodoChange={handleTodoClick}
+          />
+        ))}
       </div>
     </>
   );
