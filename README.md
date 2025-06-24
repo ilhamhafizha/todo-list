@@ -1,70 +1,92 @@
-# Getting Started with Create React App
+---
+# Proyek: Aplikasi Todo List Sederhana
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Ini adalah aplikasi **Todo List** sederhana yang dibangun menggunakan **React.js**. Aplikasi ini memungkinkan pengguna untuk menambahkan tugas baru, menandai tugas sebagai selesai atau belum selesai, dan memfilter daftar tugas berdasarkan statusnya.
+---
 
-## Available Scripts
+## Fitur Utama
 
-In the project directory, you can run:
+- **Menambah Todo Baru**: Pengguna dapat menambahkan tugas baru ke daftar. Setiap tugas memiliki `ID` unik dan `title` otomatis.
+- **Mengubah Status Selesai**: Pengguna dapat dengan mudah menandai tugas sebagai selesai atau belum selesai dengan mengklik kotak centang.
+- **Memfilter Todo**: Aplikasi menyediakan opsi untuk melihat:
+  - Semua tugas (`All`)
+  - Tugas yang sudah selesai (`Completed`)
+  - Tugas yang belum selesai (`Uncompleted`)
+- **Tampilan Dinamis**: Daftar tugas diperbarui secara _real-time_ berdasarkan penambahan, perubahan status, atau filter yang diterapkan.
 
-### `npm start`
+---
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Teknologi yang Digunakan
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- **React.js**: Library JavaScript untuk membangun _user interface_.
+- **JavaScript (ES6+)**: Bahasa pemrograman utama.
+- **HTML**: Struktur dasar halaman web.
+- **CSS**: Untuk _styling_ dasar (jika ada file `App.css` yang disertakan).
 
-### `npm test`
+---
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Cara Menjalankan Proyek (Lokal)
 
-### `npm run build`
+Ikuti langkah-langkah di bawah ini untuk menjalankan aplikasi Todo List ini di komputermu:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Prasyarat
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Pastikan kamu sudah menginstal [Node.js](https://nodejs.org/en/) (yang juga menyertakan npm) di sistemmu. Kamu bisa memeriksanya dengan menjalankan perintah berikut di terminal:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```bash
+node -v
+npm -v
+```
 
-### `npm run eject`
+### Instalasi dan Menjalankan Aplikasi
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+1.  **Kloning Repositori (Jika dari GitHub):**
+    Jika kamu mendapatkan kode ini dari GitHub, kloning repositori ke mesin lokalmu:
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+    ```bash
+    git clone https://github.com/ilhamhafizha/todo.git
+    ```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+    _(Ganti URL dengan URL repositori proyekmu jika berbeda)_
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+2.  **Navigasi ke Direktori Proyek:**
+    Masuk ke folder proyek setelah di-_clone_ atau setelah kamu membuat proyek `todo-list` dengan `create-react-app`:
 
-## Learn More
+    ```bash
+    cd todo-list
+    ```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+3.  **Instal Dependensi:**
+    Instal semua paket yang dibutuhkan oleh proyek:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+    ```bash
+    npm install
+    ```
 
-### Code Splitting
+4.  **Jalankan Aplikasi:**
+    Mulai server pengembangan. Aplikasi akan terbuka di _browser_ default-mu (biasanya di `http://localhost:3000`):
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+    ```bash
+    npm start
+    ```
 
-### Analyzing the Bundle Size
+Aplikasi Todo List sekarang sudah berjalan di _browser_ kamu\!
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+---
 
-### Making a Progressive Web App
+## Struktur Kode (Gambaran Umum `App.js`)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+Berikut adalah gambaran singkat tentang fungsionalitas utama di dalam file `App.js`:
 
-### Advanced Configuration
+- **State Management**: Menggunakan `useState` untuk mengelola `todos` (daftar tugas) dan `filter` (status filter saat ini).
+  ```javascript
+  const [todos, setTodos] = useState([]);
+  const [filter, setFilter] = useState("all");
+  ```
+- **`handleClick`**: Fungsi untuk menambahkan tugas baru ke daftar `todos`.
+- **`handleClickItemClick`**: Fungsi untuk mengubah status `completed` dari tugas yang dipilih.
+- **`filterTodo`**: Fungsi _helper_ untuk menentukan apakah sebuah tugas harus ditampilkan berdasarkan filter yang aktif.
+- **`visibleTodos`**: Variabel yang menyimpan daftar tugas yang difilter dan akan dirender.
+- **Render**: Bagian _return_ yang berisi elemen UI seperti tombol tambah, tombol filter, dan daftar tugas yang dirender secara dinamis menggunakan `.map()`.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+---

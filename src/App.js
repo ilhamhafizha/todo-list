@@ -1,5 +1,5 @@
 import "./App.css";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 
 function App() {
   const [todos, setTodos] = useState([]);
@@ -39,7 +39,8 @@ function App() {
     }
   };
 
-  const visibleTodos = todos.filter((todo) => filterTodo(todo, filter));
+  // const visibleTodos = todos.filter((todo) => filterTodo(todo, filter));
+  const memoizedFilterTodos = useMemo(() => filterTodo(todos, filter), [todos.filter]);
 
   return (
     <>
