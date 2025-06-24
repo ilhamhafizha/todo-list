@@ -1,5 +1,5 @@
 import "./App.css";
-import { useState, useMemo, useCallback } from "react";
+import { useState, useMemo, useCallback, memo } from "react";
 
 function App() {
   const [todos, setTodos] = useState([]);
@@ -30,12 +30,14 @@ function App() {
 
   const visibleTodos = useMemo(() => todos.filter((todo) => filterTodo(todo, filter)), [todos, filter]);
 
-  const TodoItem = ({ id, completed, title, onTodoChange }) => (
-    <div key={id}>
-      <input type="checkbox" checked={completed} onChange={() => onTodoChange(id)} />
-      <span>{title}</span>
-    </div>
-  );
+  const TodoItem = memo(function TodoItem({ id, completed, title, onTodoChange }) {
+    return (
+      <div>
+        <input type="checkbox" checked={completed} onChange={() => onTodoChange(id)} />
+        <span>{title}</span>
+      </div>
+    );
+  });
 
   return (
     <>
