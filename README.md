@@ -13,6 +13,8 @@
 - **Tampilan Dinamis**: Daftar tugas diperbarui secara _real-time_ berdasarkan penambahan, perubahan status, atau filter yang diterapkan.
 
 ---
+- *Live Demo* : https://todo-list-ecru-one-60.vercel.app/
+---
 
 ## Teknologi yang Digunakan
 
